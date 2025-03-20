@@ -1,0 +1,11 @@
+[desarrollo]
+desarrollo-acm ansible_ssh_user=acm
+
+[produccion]
+
+[servidores:children]
+produccion
+desarrollo
+
+[servidores:vars]
+ansible_python_interpreter=/usr/bin/python3.12
