@@ -32,6 +32,7 @@
     state: directory
     mode: '0755'
   
+## Hay q ver como corregir esto, porque cuando lo volves a ejecutar se queda esperando a que el responda ssi queres sobrescribrir el archivo
 - name: Añadir Docker's official GPG key
   shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker.gpg
 
@@ -51,7 +52,7 @@
       - docker-buildx-plugin
       - docker-compose-plugin
     state: latest
-
+    
 - name: Crear grupo "docker"
   group:
     name: docker
@@ -60,6 +61,6 @@
 
 - name: Agregar usuario al grupo "docker"
   user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_ssh_user }}"
     groups: docker
     append: yes
