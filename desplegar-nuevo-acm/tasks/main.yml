@@ -1,0 +1,26 @@
+---
+# tasks file for desplegar-acm
+- name: Crear contenedor de Assetto Corsa
+  community.docker.docker_container:
+    name: "assetto_{{ ansible_date_time.epoch }}"
+    image: "seejy/assetto-server-manager:latest"
+    state: started
+    ports:
+      - "0:8772"
+      - "0:9600"
+      - "0:9600/udp"
+      - "0:8081"
+    volumes:
+      - "/path/to/server-install:/home/assetto/server-manager/assetto"
+      - "/path/to/config.yml:/home/assetto/server-manager/config.yml"
+    restart_policy: unless-stopped
+
+- name: Comprobar si el contenedor está corriendo
+  community.docker.docker_container_info:
+    name: "assetto_{{ ansible_date_time.epoch }}"
+  register: container_info
+
+- name: Verificar que el contenedor está levantado correctamente
+  debug:
+    msg: "Contenedor {{ container_info.container.Name }} está en estado {{ container_info.container.State.Status }}"
+  when: container_info.container.State.Status == "running"

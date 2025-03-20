@@ -1,0 +1,15 @@
+- hosts: desarrollo
+  become: true
+  roles:
+    - instalar-docker
+    - desplegar-nuevo-acm
+  tasks:
+    - name: Tarea dentro de instalar-docker
+      command: echo "Ejecutando tarea de instalar-docker"
+      tags:
+        - instalar-docker
+
+    - name: Tarea dentro de desplegar-nuevo-acm
+      command: echo "Ejecutando tarea de desplegar-nuevo-acm"
+      tags:
+        - desplegar-nuevo-acm
